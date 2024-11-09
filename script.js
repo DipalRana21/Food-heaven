@@ -158,37 +158,38 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
 });
 
 
+// Get the elements
 const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
 const qrCodeContainer = document.getElementById('qr-code-container');
 const totalBillElement = document.getElementById('total-bill');
 let isAdvanceOrder = false;
 
-// Listen for the checkbox change event
+// Event Listener for Checkbox
 advanceOrderCheckbox.addEventListener('change', function () {
     if (advanceOrderCheckbox.checked) {
-        // Show the QR code container if advance order is selected
+        // Checkbox is checked, show the QR code container
         qrCodeContainer.classList.remove('hidden');
         isAdvanceOrder = true;
     } else {
-        // Hide the QR code container if advance order is not selected
+        // Checkbox is unchecked, hide the QR code container
         qrCodeContainer.classList.add('hidden');
         isAdvanceOrder = false;
     }
 });
 
-// Function to calculate total bill with an extra 10% charge if using advance order feature
+// Function to Calculate Total Bill
 function calculateTotalBill(totalAmount) {
     let finalAmount = totalAmount;
 
     if (isAdvanceOrder) {
-        const extraCharge = 0.1 * totalAmount; // Calculate 10% extra charge
+        const extraCharge = 0.1 * totalAmount; // Add 10% extra charge
         finalAmount += extraCharge;
     }
 
-    // Update the total bill element
+    // Update the total bill amount on the page
     totalBillElement.textContent = finalAmount.toFixed(2);
 
-    // Display a thank you message if advance order feature was used
+    // Display Thank You message if advance order is used
     if (isAdvanceOrder) {
         alert("Thank you for using our advance order feature! A 10% extra charge has been applied.");
     }
