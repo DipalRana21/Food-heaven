@@ -213,16 +213,6 @@ placeOrderBtn.addEventListener('click', function () {
     qrCodeContainer.classList.add('hidden');
 });
 
-// Bypass login check if coming from advance order feature
-const urlParams = new URLSearchParams(window.location.search);
-if (urlParams.get('advanceOrder') === 'true') {
-    sessionStorage.setItem('loggedIn', true); // Mark user as logged in
-}
-
-// If login check is based on sessionStorage, ensure it's set properly
-if (!sessionStorage.getItem('loggedIn')) {
-    window.location.href = 'login.html'; // Redirect to login if not logged in
-}
 
 
 
