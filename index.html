@@ -346,34 +346,22 @@
     <p><strong>Order Status:</strong> <span id="order-status"></span></p>
     <button id="markDelivered" class="mark-delivered">Mark as Delivered</button>
 
+    <label>
+    <input type="checkbox" id="advancedOrderCheckbox" onclick="applyAdvanceCharge()"> Use Advanced Order (10% extra)
+</label>
+
+<!-- QR code section -->
+<div id="qrCodeSection" style="display: none;">
+    <p>Scan the QR code below to view the menu:</p>
+    <img id="qrCode" src="image/menu_qr_code.png" alt="QR Code for Menu">
+</div>
 </section>
 
 
-<!-- <button id="placeOrderButton">Place Order</button> -->
+
 
     
     
-<!-- Order in Advance Section -->
-<div class="advance-order-section">
-    <h2>Order in Advance</h2>
-    <button id="advance-order-btn" class="order-btn">Order in Advance</button>
-</div>
-
-<!-- Modal for Advance Order -->
-<div id="advance-modal" class="modal hidden">
-    <div class="modal-content">
-        <span class="close-btn">&times;</span>
-        <h3>Order in Advance</h3>
-        <p>By using this feature, you will be charged an extra 10%.</p>
-        <button id="confirm-advance-order-btn">Confirm Order with Extra Charge</button>
-    </div>
-</div>
-
-<!-- QR Code Section (hidden initially) -->
-<div id="qr-section" class="qr-section hidden">
-    <h3>Scan to View Menu</h3>
-    <!-- <img src="https://files.oaiusercontent.com/file-gzSs0F0vRBQWNYStlRkQcHVG?se=2024-10-28T05%3A56%3A48Z&sp=r&sv=2024-08-04&sr=b&rscc=max-age%3D604800%2C%20immutable%2C%20private&rscd=attachment%3B%20filename%3D05fecf88-8281-4c75-a7b5-247021f9077b.webp&sig=ubGHy0st/qep4HT1jLJbwEHIii2gjnO32Bb811esACA%3D" alt="Scan to View Menu QR Code" class="qr-image"> -->
-</div>
 
     <section id="about">
         <h2>About Us</h2>
