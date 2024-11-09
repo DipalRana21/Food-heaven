@@ -104,7 +104,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
     if (response.ok) {
         alert(data.message);  // Show the message from backend (either with saved orders or no orders)
-        // localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.token);
         document.getElementById('main-content').classList.remove('hidden');
         document.getElementById('login').classList.add('hidden');
 
@@ -149,7 +149,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     if (response.ok) {
         alert('Signup successful!');
         // Store the token and redirect to the main content
-        // localStorage.setItem('token', data.token);
+        localStorage.setItem('token', data.token);
         document.getElementById('main-content').classList.remove('hidden');
         document.getElementById('login').classList.add('hidden');
     } else {
