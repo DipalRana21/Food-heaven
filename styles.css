@@ -652,8 +652,15 @@ p strong {
 
 
 
-.advance-order-section h2{
-    display: flex;
-    justify-content: center;
+
+#qrCodeSection {
+    margin-top: 10px;
+    text-align: center;
+}
+
+#qrCode {
+    width: 150px;
+    height: 150px;
+    margin-top: 5px;
 }
 
