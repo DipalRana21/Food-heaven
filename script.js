@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const orderSummary = document.getElementById('order-summary');
     const orderDetails = document.getElementById('order-details');
     const totalBillElement = document.getElementById('total-bill');
-    const tokenNumberElement = document.getElementById('token-number');
+   
 
     // Show the login section initially
     loginSection.style.display = 'block';
@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             orderDetails.innerHTML = items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
 
             totalBillElement.textContent = totalBill.toFixed(2);
-            // tokenNumberElement.textContent = data.tokenNumber;
+           
         } else {
             alert('Error placing order: ' + data.message);
         }
@@ -104,7 +104,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
     if (response.ok) {
         alert(data.message);  // Show the message from backend (either with saved orders or no orders)
-        localStorage.setItem('token', data.token);
+        // localStorage.setItem('token', data.token);
         document.getElementById('main-content').classList.remove('hidden');
         document.getElementById('login').classList.add('hidden');
 
@@ -113,14 +113,14 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
             const orderSummary = document.getElementById('order-summary');
             const orderDetails = document.getElementById('order-details');
             const totalBillElement = document.getElementById('total-bill');
-            const tokenNumberElement = document.getElementById('token-number');
+         
 
             orderSummary.classList.remove('hidden');
             orderDetails.innerHTML = data.orders.map(order =>
                 order.items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('')
             ).join('<br/>');
             totalBillElement.textContent = data.orders.reduce((acc, order) => acc + order.totalAmount, 0).toFixed(2);
-            // tokenNumberElement.textContent = data.orders.map(order => order.tokenNumber).join(', ');
+           
         }
     } else {
         alert(data.message);
@@ -149,7 +149,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     if (response.ok) {
         alert('Signup successful!');
         // Store the token and redirect to the main content
-        localStorage.setItem('token', data.token);
+        // localStorage.setItem('token', data.token);
         document.getElementById('main-content').classList.remove('hidden');
         document.getElementById('login').classList.add('hidden');
     } else {
