@@ -157,43 +157,55 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     }
 });
 
-
-// Get the elements
+// Elements
 const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
 const qrCodeContainer = document.getElementById('qr-code-container');
 const totalBillElement = document.getElementById('total-bill');
+const placeOrderBtn = document.getElementById('place-order');
 let isAdvanceOrder = false;
 
-// Event Listener for Checkbox
+// Check if user selects advance order feature
 advanceOrderCheckbox.addEventListener('change', function () {
     if (advanceOrderCheckbox.checked) {
-        // Checkbox is checked, show the QR code container
-        qrCodeContainer.classList.remove('hidden');
+        qrCodeContainer.classList.remove('hidden'); // Show QR code
+        sessionStorage.setItem('isAdvanceOrder', true); // Mark as advance order
         isAdvanceOrder = true;
     } else {
-        // Checkbox is unchecked, hide the QR code container
-        qrCodeContainer.classList.add('hidden');
+        qrCodeContainer.classList.add('hidden'); // Hide QR code
+        sessionStorage.setItem('isAdvanceOrder', false); // Reset advance order
         isAdvanceOrder = false;
     }
 });
 
 // Function to Calculate Total Bill
-function calculateTotalBill(totalAmount) {
-    let finalAmount = totalAmount;
+function calculateTotalBill(baseAmount) {
+    let finalAmount = baseAmount;
 
-    if (isAdvanceOrder) {
-        const extraCharge = 0.1 * totalAmount; // Add 10% extra charge
+    // Apply 10% extra charge if advance order is used
+    if (sessionStorage.getItem('isAdvanceOrder') === 'true') {
+        const extraCharge = 0.1 * baseAmount; // 10% extra charge
         finalAmount += extraCharge;
+
+        alert("A 10% extra charge has been applied for using the advance order feature.");
     }
 
-    // Update the total bill amount on the page
+    // Update total bill on the screen
     totalBillElement.textContent = finalAmount.toFixed(2);
-
-    // Display Thank You message if advance order is used
-    if (isAdvanceOrder) {
-        alert("Thank you for using our advance order feature! A 10% extra charge has been applied.");
-    }
 }
+
+// Place Order button logic
+placeOrderBtn.addEventListener('click', function () {
+    const baseAmount = parseFloat(totalBillElement.textContent) || 0; // Use current total bill as base amount
+    calculateTotalBill(baseAmount);
+
+    // Thank you message after placing order
+    alert("Thank you for placing your order! Your total bill is ₹" + totalBillElement.textContent);
+
+    // Reset advance order state after placing the order
+    sessionStorage.setItem('isAdvanceOrder', false);
+    advanceOrderCheckbox.checked = false;
+    qrCodeContainer.classList.add('hidden'); // Hide QR code after order is placed
+});
 
 
 
