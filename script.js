@@ -1,3 +1,7 @@
+
+const backendUrl = 'https://backend-repo-0k18.onrender.com';
+
+
 document.addEventListener('DOMContentLoaded', function() {
     const loginSection = document.getElementById('login');
     const signupForm = document.getElementById('signup-form');
@@ -53,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             totalBill += itemPrice * itemQuantity;
         });
     
-        const response = await fetch('http://localhost:5000/place-order', {
+        const response = await fetch(`${backendUrl}/place-order`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -114,7 +118,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch('http://localhost:5000/login', {
+    const response = await fetch(`${backendUrl}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -158,7 +162,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     const email = document.getElementById('new-email').value;
     const password = document.getElementById('new-password').value;
 
-    const response = await fetch('http://localhost:5000/signup', {
+    const response = await fetch(`${backendUrl}/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
