@@ -162,53 +162,67 @@ const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
 const qrCodeContainer = document.getElementById('qr-code-container');
 const totalBillElement = document.getElementById('total-bill');
 const placeOrderBtn = document.getElementById('place-order');
+const qrCodeImage = document.getElementById('qr-code-img'); // Assuming this is your QR code image
 let isAdvanceOrder = false;
 
-// Check if user selects advance order feature
+// Generate QR Code URL with advanceOrder=true
+const menuURL = "https://dipalrana21.github.io/Food-heaven/#menu?advanceOrder=true";
+
+// QR Code setup for Advance Order
 advanceOrderCheckbox.addEventListener('change', function () {
     if (advanceOrderCheckbox.checked) {
-        qrCodeContainer.classList.remove('hidden'); // Show QR code
-        sessionStorage.setItem('isAdvanceOrder', true); // Mark as advance order
+        // Show QR code
+        qrCodeContainer.classList.remove('hidden');
+        sessionStorage.setItem('isAdvanceOrder', true);
         isAdvanceOrder = true;
+
+        // Update QR code image src (make sure this QR code directs to menuURL)
+        qrCodeImage.src = "img/qr-code-menu.png"; // Replace with your actual QR code image source
     } else {
-        qrCodeContainer.classList.add('hidden'); // Hide QR code
-        sessionStorage.setItem('isAdvanceOrder', false); // Reset advance order
+        // Hide QR code
+        qrCodeContainer.classList.add('hidden');
+        sessionStorage.setItem('isAdvanceOrder', false);
         isAdvanceOrder = false;
     }
 });
 
-// Function to Calculate Total Bill
+// Function to calculate total bill with 10% charge if advance order is selected
 function calculateTotalBill(baseAmount) {
     let finalAmount = baseAmount;
 
-    // Apply 10% extra charge if advance order is used
     if (sessionStorage.getItem('isAdvanceOrder') === 'true') {
-        const extraCharge = 0.1 * baseAmount; // 10% extra charge
+        const extraCharge = 0.1 * baseAmount;
         finalAmount += extraCharge;
-
         alert("A 10% extra charge has been applied for using the advance order feature.");
     }
 
-    // Update total bill on the screen
+    // Update total bill
     totalBillElement.textContent = finalAmount.toFixed(2);
 }
 
 // Place Order button logic
 placeOrderBtn.addEventListener('click', function () {
-    const baseAmount = parseFloat(totalBillElement.textContent) || 0; // Use current total bill as base amount
+    const baseAmount = parseFloat(totalBillElement.textContent) || 0;
     calculateTotalBill(baseAmount);
 
-    // Thank you message after placing order
     alert("Thank you for placing your order! Your total bill is ₹" + totalBillElement.textContent);
 
-    // Reset advance order state after placing the order
+    // Reset advance order state
     sessionStorage.setItem('isAdvanceOrder', false);
     advanceOrderCheckbox.checked = false;
-    qrCodeContainer.classList.add('hidden'); // Hide QR code after order is placed
+    qrCodeContainer.classList.add('hidden');
 });
 
+// Bypass login check if coming from advance order feature
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('advanceOrder') === 'true') {
+    sessionStorage.setItem('loggedIn', true); // Mark user as logged in
+}
 
-
+// If login check is based on sessionStorage, ensure it's set properly
+if (!sessionStorage.getItem('loggedIn')) {
+    window.location.href = 'login.html'; // Redirect to login if not logged in
+}
 
 
 
