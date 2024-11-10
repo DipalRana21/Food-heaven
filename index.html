@@ -420,81 +420,134 @@
 
  
 
-    <section id="services">
-        <h2>Our Services</h2>
-        <style>
-            /* General Section Styles */
-            .section-container {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                padding: 2rem;
-                background-color: #ffdeca; /* Soft background color */
-                border-radius: 12px; /* Smooth corners */
-                max-width: 1200px;
-                margin: 2rem auto;
-            }
+   <style>
+    /* General Section Styles */
+    .section-container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2rem;
+        background-color: #ffdeca;
+        border-radius: 12px;
+        max-width: 1200px;
+        margin: 2rem auto;
+    }
 
-            .section-content {
-                flex: 1;
-            }
+    .section-content {
+        flex: 1;
+        margin-right: 2rem;
+    }
 
-            .section-content h2 {
-                font-family: "Didot Italic";
-                font-weight: 500;
-                font-size: 2rem;
-                margin-bottom: 1rem;
-            }
+    .section-content h2 {
+        font-family: "Didot Italic";
+        font-weight: 500;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
 
-            .section-content p {
-                margin-bottom: 1.5rem;
-                text-align: justify;
-            }
+    .section-content p {
+        margin-bottom: 1.5rem;
+        text-align: justify;
+    }
 
-            /* Button Styling */
-            .btn-rlb {
-                display: inline-block;
-                font-weight: 600;
-                text-align: center;
-                white-space: nowrap;
-                cursor: pointer;
-                border: 1px solid transparent;
-                padding: 0.5rem 2rem;
-                font-size: 1rem;
-                text-transform: uppercase;
-                background-color: #701515;
-                color: #fff;
-                border-radius: 25px; /* Adding curved edges */
-                transition: all 0.2s ease-in-out;
-            }
+    /* Button Styling */
+    .btn-rlb {
+        display: inline-block;
+        font-weight: 600;
+        text-align: center;
+        white-space: nowrap;
+        cursor: pointer;
+        border: 1px solid transparent;
+        padding: 0.5rem 2rem;
+        font-size: 1rem;
+        text-transform: uppercase;
+        background-color: #701515;
+        color: #fff;
+        border-radius: 25px;
+        transition: all 0.2s ease-in-out;
+    }
 
-            .btn-rlb:hover {
-                background-color: #f2f2f2;
-                border-color: #a2a582;
-                color: #701515;
-            }
+    .btn-rlb:hover {
+        background-color: #f2f2f2;
+        border-color: #a2a582;
+        color: #701515;
+    }
 
-            /* Image Styling */
-            .section-container img {
-                max-width: 100%;
-                height: auto;
-                border-radius: 8px;
-                flex: 1;
-                margin-right: 2rem;
-            }
+    /* Image Styling */
+    .section-container img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        flex: 1;
+    }
 
-            /* Online Ordering Section */
-            .ordering-section img {
-                margin-left: 2rem;
-                margin-right: 0;
-            }
+    /* Adjust for Online Ordering Section */
+    .ordering-section img {
+        margin-left: 2rem;
+        margin-right: 0;
+    }
 
-            /* Takeout & Curbside Pickup Section */
-            .pickup-section img {
-                margin-right: 2rem;
-            }
+    /* Takeout & Curbside Pickup Section */
+    .pickup-section img {
+        margin-right: 2rem;
+    }
 
-        </style>
+    /* Responsive Design Adjustments */
+    @media (max-width: 992px) {
+        .section-container {
+            padding: 1.5rem;
+            flex-direction: column; /* Stack on smaller screens */
+            text-align: center;
+        }
+
+        .section-content {
+            margin-right: 0; /* Remove margin in stacked layout */
+        }
+
+        .section-content h2 {
+            font-size: 1.75rem;
+        }
+
+        .section-content p {
+            font-size: 0.95rem;
+        }
+
+        .section-container img {
+            margin: 1rem 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-content h2 {
+            font-size: 1.5rem;
+        }
+
+        .section-content p {
+            font-size: 0.9rem;
+        }
+
+        .btn-rlb {
+            font-size: 0.9rem;
+            padding: 0.4rem 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .section-content h2 {
+            font-size: 1.2rem;
+        }
+
+        .section-content p {
+            font-size: 0.85rem;
+        }
+
+        .btn-rlb {
+            font-size: 0.85rem;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+        }
+    }
+</style>
    
         <!-- Reservations Section -->
         <div class="section-container">
