@@ -222,35 +222,36 @@ const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
 const qrCodeContainer = document.getElementById('qr-code-container');
 const totalBillElement = document.getElementById('total-bill');
 const placeOrderBtn = document.getElementById('place-order');
-const qrCodeImage = document.getElementById('qr-code-img'); 
-let baseBillAmount = parseFloat(totalBillElement.textContent) || 0;  // Initialize with the current total
+const qrCodeImage = document.getElementById('menuQrCode'); // Your QR code image element
+let baseBillAmount = parseFloat(totalBillElement.textContent) || 0; // Initialize with the current total
 
-// Generate QR Code URL with advanceOrder=true
+// QR Code URL with advanceOrder=true (for scanning menu)
 const menuURL = "https://dipalrana21.github.io/Food-heaven/#menu?advanceOrder=true";
 
-// Function to update total bill
+// Update total bill when the advance order checkbox is checked
 function updateTotalBill() {
-    let currentBillAmount = baseBillAmount; // Start with the base order total
+    // Reset to the base amount initially
+    let currentBillAmount = baseBillAmount; 
     const isAdvanceOrder = advanceOrderCheckbox.checked;
 
-    // If advance order feature is selected, add ₹50 extra charge
+    // If advance order is selected, add ₹50 extra charge
     if (isAdvanceOrder) {
-        currentBillAmount += 50; // Add fixed ₹50 charge
+        currentBillAmount += 50; // Fixed ₹50 extra charge
     }
 
-    // Display the updated total bill amount
+    // Update the displayed total bill amount
     totalBillElement.textContent = currentBillAmount.toFixed(2);
-    return currentBillAmount; // Return the updated total amount for further use
+    return currentBillAmount; // Return the updated total amount
 }
 
 // Event listener for advance order checkbox
 advanceOrderCheckbox.addEventListener('change', function () {
     if (advanceOrderCheckbox.checked) {
-        // Show QR code container when advance order is selected
+        // Show QR code when advance order is selected
         qrCodeContainer.classList.remove('hidden');
         sessionStorage.setItem('isAdvanceOrder', true);
     } else {
-        // Hide QR code container when advance order is deselected
+        // Hide QR code when advance order is deselected
         qrCodeContainer.classList.add('hidden');
         sessionStorage.setItem('isAdvanceOrder', false);
     }
@@ -261,7 +262,7 @@ advanceOrderCheckbox.addEventListener('change', function () {
 
 // Place Order button logic
 placeOrderBtn.addEventListener('click', function () {
-    const finalBillAmount = updateTotalBill(); // Get the latest bill amount
+    const finalBillAmount = updateTotalBill(); // Get the updated total bill amount
 
     // Show an alert with the correct total bill amount
     alert("Thank you for placing your order! Your total bill is ₹" + finalBillAmount.toFixed(2));
@@ -271,10 +272,9 @@ placeOrderBtn.addEventListener('click', function () {
     qrCodeContainer.classList.add('hidden');
     sessionStorage.setItem('isAdvanceOrder', false);
 
-    // Update the displayed bill amount to the base amount (without the ₹50 charge)
+    // Reset the displayed bill amount back to base (without ₹50 extra charge)
     totalBillElement.textContent = baseBillAmount.toFixed(2);
 });
-
 
 
 
