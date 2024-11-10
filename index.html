@@ -584,6 +584,25 @@
     </section>
 </div>
     <script src="script.js"></script>
+
+
+    <script>
+    // On page load, check if token is already present in localStorage
+    document.addEventListener('DOMContentLoaded', () => {
+        const token = localStorage.getItem('token');
+        
+        if (token) {
+            // User is already logged in, proceed without login prompt
+            console.log("User already logged in via QR. Proceeding with the menu...");
+
+            // Optionally, you can fetch the menu or user-specific data if needed here.
+        } else {
+            // If no token found, redirect to login page
+            alert("Please log in to access the menu.");
+            window.location.href = "/login"; // Redirect to login if not logged in
+        }
+    });
+</script>
 </body>
 
 
