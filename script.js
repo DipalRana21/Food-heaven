@@ -157,60 +157,49 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     }
 });
 
+
+
 // Elements
-// const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
-// const qrCodeContainer = document.getElementById('qr-code-container');
-// const totalBillElement = document.getElementById('total-bill');
-// const placeOrderBtn = document.getElementById('place-order');
-// const qrCodeImage = document.getElementById('qr-code-img'); // Assuming this is your QR code image
-// let isAdvanceOrder = false;
-
-// // Generate QR Code URL with advanceOrder=true
-// const menuURL = "https://dipalrana21.github.io/Food-heaven/#menu?advanceOrder=true";
-
-// // QR Code setup for Advance Order
-// advanceOrderCheckbox.addEventListener('change', function () {
-//     if (advanceOrderCheckbox.checked) {
-//         // Show QR code
-//         qrCodeContainer.classList.remove('hidden');
-//         sessionStorage.setItem('isAdvanceOrder', true);
-//         isAdvanceOrder = true;
-
-//         // Update QR code image src (make sure this QR code directs to menuURL)
-//         qrCodeImage.src = "img/qr-code-menu.png"; // Replace with your actual QR code image source
-//     } else {
-//         // Hide QR code
-//         qrCodeContainer.classList.add('hidden');
-//         sessionStorage.setItem('isAdvanceOrder', false);
-//         isAdvanceOrder = false;
-//     }
-// });
-
 const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
 const qrCodeContainer = document.getElementById('qr-code-container');
+const totalBillElement = document.getElementById('total-bill');
+const placeOrderBtn = document.getElementById('place-order');
 const qrCodeImage = document.getElementById('qr-code-img'); // Assuming this is your QR code image
-
 let isAdvanceOrder = false;
 
-// Check if user is logged in
-const userToken = localStorage.getItem('token');
-const menuURL = `https://dipalrana21.github.io/Food-heaven/#menu?advanceOrder=true&token=${userToken}`;
+// Generate QR Code URL with advanceOrder=true
+const menuURL = "https://dipalrana21.github.io/Food-heaven/#menu?advanceOrder=true";
 
 // QR Code setup for Advance Order
 advanceOrderCheckbox.addEventListener('change', function () {
     if (advanceOrderCheckbox.checked) {
+        // Show QR code
         qrCodeContainer.classList.remove('hidden');
         sessionStorage.setItem('isAdvanceOrder', true);
         isAdvanceOrder = true;
 
-        // Update QR code image src (ensure this QR code directs to menuURL)
-        qrCodeImage.src = `img/qr-code-menu.png`; // Update with your actual QR code image
+        // Update QR code image src (make sure this QR code directs to menuURL)
+        qrCodeImage.src = "img/qr-code-menu.png"; // Replace with your actual QR code image source
     } else {
+        // Hide QR code
         qrCodeContainer.classList.add('hidden');
         sessionStorage.setItem('isAdvanceOrder', false);
         isAdvanceOrder = false;
     }
 });
+
+if (!sessionStorage.getItem('isLoggedIn')) {
+    // Redirect to login page if not logged in
+    window.location.href = "login.html"; 
+} else {
+    console.log("User is already logged in.");
+}
+
+// Handle user login (Assuming this happens at login time in your script)
+function loginUser() {
+    sessionStorage.setItem('isLoggedIn', true); 
+    alert("Login successful!");
+}
 
 
 // Function to calculate total bill with 10% charge if advance order is selected
@@ -331,39 +320,5 @@ updateStatusButton?.addEventListener("click", () => {
 
 
 
-// Function to auto-login using token from localStorage when accessing menu via QR code
-document.addEventListener('DOMContentLoaded', async () => {
-    const token = localStorage.getItem('token');
 
-    if (token) {
-        console.log("User already logged in via QR. Accessing the menu directly...");
-
-        // Here, you can make a call to the backend to validate the token if needed.
-        try {
-            const response = await fetch(`${backendUrl}/validate-token`, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-
-            if (response.ok) {
-                // If token is valid, user can proceed with the menu
-                console.log("Token is valid. Proceeding with the menu...");
-            } else {
-                // If token is invalid, redirect to login
-                console.log("Invalid token. Redirecting to login...");
-                alert("Session expired. Please log in again.");
-                window.location.href = "/login";
-            }
-        } catch (error) {
-            console.error("Error validating token:", error);
-            window.location.href = "/login"; // Redirect to login on error
-        }
-    } else {
-        // If no token found, redirect to login page
-        alert("Please log in to access the menu.");
-        window.location.href = "/login";
-    }
-});
 
