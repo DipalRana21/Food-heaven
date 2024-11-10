@@ -419,8 +419,7 @@
     </section>
 
  
-
-   <style>
+<style>
     /* General Section Styles */
     .section-container {
         display: flex;
@@ -481,70 +480,70 @@
         flex: 1;
     }
 
-    /* Adjust for Online Ordering Section */
-    .ordering-section img {
-        margin-left: 2rem;
-        margin-right: 0;
-    }
-
-    /* Takeout & Curbside Pickup Section */
-    .pickup-section img {
-        margin-right: 2rem;
-    }
-
-    /* Responsive Design Adjustments */
+    /* Responsive Design Adjustments for Mobile */
     @media (max-width: 992px) {
         .section-container {
             padding: 1.5rem;
-            flex-direction: column; /* Stack on smaller screens */
-            text-align: center;
+            flex-direction: column; /* Stack elements vertically on smaller screens */
+            text-align: center; /* Center text on smaller screens */
         }
 
         .section-content {
-            margin-right: 0; /* Remove margin in stacked layout */
+            margin-right: 0; /* Remove margin when stacked */
+            margin-bottom: 1rem; /* Add space between sections */
         }
 
         .section-content h2 {
-            font-size: 1.75rem;
+            font-size: 1.75rem; /* Slightly smaller heading */
         }
 
         .section-content p {
-            font-size: 0.95rem;
+            font-size: 1rem; /* Adjust paragraph size for readability */
         }
 
         .section-container img {
-            margin: 1rem 0;
+            margin-top: 1rem; /* Add margin at top for better spacing */
+        }
+
+        .btn-rlb {
+            padding: 0.4rem 1.5rem;
+            font-size: 1rem;
         }
     }
 
     @media (max-width: 768px) {
         .section-content h2 {
-            font-size: 1.5rem;
+            font-size: 1.5rem; /* Further reduce heading size */
         }
 
         .section-content p {
-            font-size: 0.9rem;
+            font-size: 0.95rem; /* Adjust paragraph size for better readability */
         }
 
         .btn-rlb {
-            font-size: 0.9rem;
-            padding: 0.4rem 1.5rem;
+            font-size: 0.95rem;
+            padding: 0.4rem 1.25rem;
         }
     }
 
     @media (max-width: 480px) {
         .section-content h2 {
-            font-size: 1.2rem;
+            font-size: 1.2rem; /* Reduce heading size even further */
         }
 
         .section-content p {
-            font-size: 0.85rem;
+            font-size: 0.9rem; /* Adjust paragraph font size */
         }
 
         .btn-rlb {
             font-size: 0.85rem;
-            padding: 0.3rem 1rem;
-            border-radius: 20px;
+            padding: 0.35rem 1rem;
+            border-radius: 20px; /* More compact button on mobile */
+        }
+
+        /* Optional: You can reduce the padding of the section-container for even smaller screens */
+        .section-container {
+            padding: 1rem;
         }
     }
 </style>
