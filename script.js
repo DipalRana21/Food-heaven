@@ -188,18 +188,6 @@ advanceOrderCheckbox.addEventListener('change', function () {
     }
 });
 
-if (!sessionStorage.getItem('isLoggedIn')) {
-    // Redirect to login page if not logged in
-    window.location.href = "login.html"; 
-} else {
-    console.log("User is already logged in.");
-}
-
-// Handle user login (Assuming this happens at login time in your script)
-function loginUser() {
-    sessionStorage.setItem('isLoggedIn', true); 
-    alert("Login successful!");
-}
 
 
 // Function to calculate total bill with 10% charge if advance order is selected
