@@ -158,33 +158,60 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
 });
 
 // Elements
+// const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
+// const qrCodeContainer = document.getElementById('qr-code-container');
+// const totalBillElement = document.getElementById('total-bill');
+// const placeOrderBtn = document.getElementById('place-order');
+// const qrCodeImage = document.getElementById('qr-code-img'); // Assuming this is your QR code image
+// let isAdvanceOrder = false;
+
+// // Generate QR Code URL with advanceOrder=true
+// const menuURL = "https://dipalrana21.github.io/Food-heaven/#menu?advanceOrder=true";
+
+// // QR Code setup for Advance Order
+// advanceOrderCheckbox.addEventListener('change', function () {
+//     if (advanceOrderCheckbox.checked) {
+//         // Show QR code
+//         qrCodeContainer.classList.remove('hidden');
+//         sessionStorage.setItem('isAdvanceOrder', true);
+//         isAdvanceOrder = true;
+
+//         // Update QR code image src (make sure this QR code directs to menuURL)
+//         qrCodeImage.src = "img/qr-code-menu.png"; // Replace with your actual QR code image source
+//     } else {
+//         // Hide QR code
+//         qrCodeContainer.classList.add('hidden');
+//         sessionStorage.setItem('isAdvanceOrder', false);
+//         isAdvanceOrder = false;
+//     }
+// });
+
 const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
 const qrCodeContainer = document.getElementById('qr-code-container');
-const totalBillElement = document.getElementById('total-bill');
-const placeOrderBtn = document.getElementById('place-order');
 const qrCodeImage = document.getElementById('qr-code-img'); // Assuming this is your QR code image
+
 let isAdvanceOrder = false;
 
-// Generate QR Code URL with advanceOrder=true
-const menuURL = "https://dipalrana21.github.io/Food-heaven/#menu?advanceOrder=true";
+// Check if user is logged in
+const userToken = localStorage.getItem('token');
+const menuURL = `https://dipalrana21.github.io/Food-heaven/#menu?advanceOrder=true&token=${userToken}`;
 
 // QR Code setup for Advance Order
 advanceOrderCheckbox.addEventListener('change', function () {
     if (advanceOrderCheckbox.checked) {
-        // Show QR code
         qrCodeContainer.classList.remove('hidden');
         sessionStorage.setItem('isAdvanceOrder', true);
         isAdvanceOrder = true;
 
-        // Update QR code image src (make sure this QR code directs to menuURL)
-        qrCodeImage.src = "img/qr-code-menu.png"; // Replace with your actual QR code image source
+        // Update QR code image src (ensure this QR code directs to menuURL)
+        qrCodeImage.src = `img/qr-code-menu.png`; // Update with your actual QR code image
     } else {
-        // Hide QR code
         qrCodeContainer.classList.add('hidden');
         sessionStorage.setItem('isAdvanceOrder', false);
         isAdvanceOrder = false;
     }
 });
+
 
 // Function to calculate total bill with 10% charge if advance order is selected
 function calculateTotalBill(baseAmount) {
@@ -303,4 +330,20 @@ updateStatusButton?.addEventListener("click", () => {
 });
 
 
+document.addEventListener('DOMContentLoaded', () => {
+        // Check if a token is provided in the URL
+        const urlParams = new URLSearchParams(window.location.hash.replace('#', ''));
+        const token = urlParams.get('token');
 
+        if (token) {
+            // Store token in localStorage if it exists
+            localStorage.setItem('token', token);
+            localStorage.setItem('isLoggedIn', 'true');
+        }
+
+        // Check if user is logged in
+        const isLoggedIn = localStorage.getItem('isLoggedIn');
+        if (!isLoggedIn) {
+            window.location.href = '/login';
+        }
+    });
