@@ -243,13 +243,16 @@ advanceOrderCheckbox.addEventListener('change', function () {
         sessionStorage.setItem('isAdvanceOrder', false);
         isAdvanceOrder = false;
     }
+
+    // Update the total bill in real-time based on the checkbox status
+    updateTotalBill();
 });
 
-// Updated function to calculate total bill with a fixed ₹50 charge for advance order
-function calculateTotalBill(baseAmount) {
+// Function to calculate total bill with ₹50 fixed charge if advance order is selected
+function updateTotalBill() {
+    let baseAmount = parseFloat(totalBillElement.textContent) || 0;
     let finalAmount = baseAmount;
 
-    // **Fixed ₹50 Extra Charge** instead of 10% extra charge
     if (sessionStorage.getItem('isAdvanceOrder') === 'true') {
         const fixedCharge = 50;
         finalAmount += fixedCharge;
@@ -262,18 +265,20 @@ function calculateTotalBill(baseAmount) {
 
 // Place Order button logic
 placeOrderBtn.addEventListener('click', function () {
-    // Get the base amount from the total bill element
-    const baseAmount = parseFloat(totalBillElement.textContent) || 0;
+    // Directly update and calculate the total bill with fixed charge if applicable
+    updateTotalBill();
 
-    // Calculate and update the total bill with the fixed charge if applicable
-    calculateTotalBill(baseAmount);
+    // Get the updated total amount after recalculating
+    const updatedBillAmount = parseFloat(totalBillElement.textContent) || 0;
 
-    alert("Thank you for placing your order! Your total bill is ₹" + totalBillElement.textContent);
+    alert("Thank you for placing your order! Your total bill is ₹" + updatedBillAmount);
 
-    // Reset advance order state
+    // Reset advance order state after placing the order
     sessionStorage.setItem('isAdvanceOrder', false);
     advanceOrderCheckbox.checked = false;
     qrCodeContainer.classList.add('hidden');
+    // Reset the total bill back to the base amount (without ₹50 charge) for new orders
+    totalBillElement.textContent = (updatedBillAmount - 50).toFixed(2);
 });
 
 
