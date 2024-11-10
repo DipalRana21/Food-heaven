@@ -330,20 +330,40 @@ updateStatusButton?.addEventListener("click", () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', () => {
-        // Check if a token is provided in the URL
-        const urlParams = new URLSearchParams(window.location.hash.replace('#', ''));
-        const token = urlParams.get('token');
 
-        if (token) {
-            // Store token in localStorage if it exists
-            localStorage.setItem('token', token);
-            localStorage.setItem('isLoggedIn', 'true');
-        }
+// Function to auto-login using token from localStorage when accessing menu via QR code
+document.addEventListener('DOMContentLoaded', async () => {
+    const token = localStorage.getItem('token');
 
-        // Check if user is logged in
-        const isLoggedIn = localStorage.getItem('isLoggedIn');
-        if (!isLoggedIn) {
-            window.location.href = '/login';
+    if (token) {
+        console.log("User already logged in via QR. Accessing the menu directly...");
+
+        // Here, you can make a call to the backend to validate the token if needed.
+        try {
+            const response = await fetch(`${backendUrl}/validate-token`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+            if (response.ok) {
+                // If token is valid, user can proceed with the menu
+                console.log("Token is valid. Proceeding with the menu...");
+            } else {
+                // If token is invalid, redirect to login
+                console.log("Invalid token. Redirecting to login...");
+                alert("Session expired. Please log in again.");
+                window.location.href = "/login";
+            }
+        } catch (error) {
+            console.error("Error validating token:", error);
+            window.location.href = "/login"; // Redirect to login on error
         }
-    });
+    } else {
+        // If no token found, redirect to login page
+        alert("Please log in to access the menu.");
+        window.location.href = "/login";
+    }
+});
+
