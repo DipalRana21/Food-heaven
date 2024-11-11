@@ -55,8 +55,9 @@ document.addEventListener('DOMContentLoaded', function() {
             items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
             totalBill += itemPrice * itemQuantity;
         });
-    
-        const response = await fetch(${backendUrl}/place-order, {
+
+        const response = await fetch(`${backendUrl}/place-order`, {
+       
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
