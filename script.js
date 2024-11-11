@@ -219,71 +219,71 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
 
 
 // Get necessary DOM elements
-// Get necessary DOM elements
 const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
 const qrCodeContainer = document.getElementById('qr-code-container');
 const totalBillElement = document.getElementById('total-bill');
 const placeOrderBtn = document.getElementById('place-order');
-const qrCodeImage = document.getElementById('menuQrCode'); 
-let baseBillAmount = 0; // Initialize to 0 and will be updated with actual total
-let isAdvanceOrderSelected = false;
-let extraCharge = 50; // Fixed ₹50 extra charge for advance order
 
-// Function to get the current base total bill amount
-function getBaseTotalBill() {
-    const baseAmount = parseFloat(totalBillElement.textContent) || 0;
-    return baseAmount;
-}
+// Initialize variables
+let baseBillAmount = parseFloat(totalBillElement.textContent) || 0;
+let extraCharge = 50; // Fixed ₹50 extra charge
+let isAdvanceOrder = false; // Track the state of advance order
 
-// Function to update the total bill based on the checkbox state
+// Function to update total bill on the screen
 function updateTotalBill() {
-    baseBillAmount = getBaseTotalBill(); // Get the current order total
-    let finalBillAmount = baseBillAmount;
-
-    // If the advance order checkbox is selected, add ₹50 extra charge
-    if (advanceOrderCheckbox.checked) {
-        finalBillAmount += extraCharge;
-        isAdvanceOrderSelected = true;
-    } else {
-        isAdvanceOrderSelected = false;
+    let currentBill = baseBillAmount;
+    if (isAdvanceOrder) {
+        currentBill += extraCharge;
     }
-
-    // Update the displayed total bill amount
-    totalBillElement.textContent = finalBillAmount.toFixed(2);
-    return finalBillAmount; // Return the updated total amount
+    totalBillElement.textContent = currentBill.toFixed(2);
 }
+
+// Load state from session on page load
+window.addEventListener('DOMContentLoaded', () => {
+    // Check if advance order was previously selected
+    isAdvanceOrder = sessionStorage.getItem('isAdvanceOrder') === 'true';
+
+    // Set checkbox state based on stored value
+    advanceOrderCheckbox.checked = isAdvanceOrder;
+    qrCodeContainer.classList.toggle('hidden', !isAdvanceOrder);
+
+    // Update the total bill based on the stored state
+    updateTotalBill();
+});
 
 // Event listener for advance order checkbox
-advanceOrderCheckbox.addEventListener('change', function () {
-    if (advanceOrderCheckbox.checked) {
-        // Show QR code when advance order is selected
+advanceOrderCheckbox.addEventListener('change', () => {
+    isAdvanceOrder = advanceOrderCheckbox.checked;
+    sessionStorage.setItem('isAdvanceOrder', isAdvanceOrder);
+
+    // Show/hide QR code container
+    if (isAdvanceOrder) {
         qrCodeContainer.classList.remove('hidden');
-        sessionStorage.setItem('isAdvanceOrder', true);
     } else {
-        // Hide QR code when advance order is deselected
         qrCodeContainer.classList.add('hidden');
-        sessionStorage.setItem('isAdvanceOrder', false);
     }
 
-    // Update the total bill whenever checkbox state changes
+    // Update total bill
     updateTotalBill();
 });
 
 // Place Order button logic
-placeOrderBtn.addEventListener('click', function () {
-    const finalBillAmount = updateTotalBill(); // Get the updated total bill amount
+placeOrderBtn.addEventListener('click', () => {
+    const finalBillAmount = parseFloat(totalBillElement.textContent);
 
-    // Show an alert with the correct total bill amount
-    alert("Thank you for placing your order! Your total bill is ₹" + finalBillAmount.toFixed(2));
+    // Alert with the total bill amount
+    alert(`Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)}`);
 
-    // Reset advance order state after placing the order
+    // Reset UI and state after placing the order
     advanceOrderCheckbox.checked = false;
     qrCodeContainer.classList.add('hidden');
-    sessionStorage.setItem('isAdvanceOrder', false);
+    sessionStorage.setItem('isAdvanceOrder', 'false');
+    isAdvanceOrder = false;
 
-    // Reset the displayed bill amount back to base (without ₹50 extra charge)
-    totalBillElement.textContent = getBaseTotalBill().toFixed(2);
+    // Update total bill back to base
+    updateTotalBill();
 });
+
 
 
 
