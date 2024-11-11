@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', function() {
             totalBill += itemPrice * itemQuantity;
         });
     
-        const response = await fetch(`${backendUrl}/place-order`, {
+        const response = await fetch(${backendUrl}/place-order, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
