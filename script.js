@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const qrCodeContainer = document.getElementById('qr-code-container');
 
     let extraCharge = 50; // Fixed ₹50 extra charge for advance order
-    let baseBillAmount = 0; // Initialize base bill amount
 
     // Show the login section initially
     loginSection.style.display = 'block';
