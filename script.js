@@ -56,11 +56,11 @@ document.addEventListener('DOMContentLoaded', function() {
             totalBill += itemPrice * itemQuantity;
         });
     
-        const response = await fetch(${backendUrl}/place-order, {
+        const response = await fetch(`${backendUrl}/place-order`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': Bearer ${localStorage.getItem('token')},
+                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
             body: JSON.stringify({ items, totalAmount: totalBill }),
         });
@@ -91,7 +91,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    const response = await fetch(${backendUrl}/login, {
+    const response = await fetch(`${backendUrl}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -135,7 +135,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
     const email = document.getElementById('new-email').value;
     const password = document.getElementById('new-password').value;
 
-    const response = await fetch(${backendUrl}/signup, {
+    const response = await fetch(`${backendUrl}/signup`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -341,7 +341,7 @@ placeOrderBtn.addEventListener('click', () => {
     const finalAmount = parseFloat(totalBillElement.textContent);
     
     // Show alert with the correct total bill
-    alert(Thank you for your order! Your total bill is ₹${finalAmount.toFixed(2)});
+    alert(`Thank you for your order! Your total bill is ₹${finalAmount.toFixed(2)}`);
 
     // Save the order details to localStorage
     localStorage.setItem('finalBillAmount', finalAmount);
@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
             `).join('');
 
             // Update total bill and order status
-            totalBill.textContent = ₹${lastOrder.total};
+            totalBill.textContent = `₹${lastOrder.total}`;
             // orderStatus.textContent = lastOrder.status || "Pending";
 
             // Show or hide "Mark as Delivered" button based on order status
