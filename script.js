@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             orderSummary.classList.remove('hidden');
             document.getElementById('menu').classList.add('hidden');
     
-            orderDetails.innerHTML = items.map(item =>` <p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
+            orderDetails.innerHTML = items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
 
             totalBillElement.textContent = totalBill.toFixed(2);
            
