@@ -271,7 +271,7 @@ placeOrderBtn.addEventListener('click', () => {
     const finalBillAmount = parseFloat(totalBillElement.textContent);
 
     // Alert with the total bill amount
-    alert(Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)});
+    alert(`Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)}`);
 
     // Reset UI and state after placing the order
     advanceOrderCheckbox.checked = false;
@@ -318,7 +318,7 @@ document.addEventListener('DOMContentLoaded', () => {
             totalBill.textContent = `₹${lastOrder.total}`;
             orderStatus.textContent = lastOrder.status || "Pending";
 
-            Show or hide "Mark as Delivered" button based on order status
+            // Show or hide "Mark as Delivered" button based on order status
             if (lastOrder.status === "Pending") {
                 updateStatusButton.classList.remove("hidden");
             } else {
