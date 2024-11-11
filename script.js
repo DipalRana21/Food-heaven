@@ -219,6 +219,7 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
 
 
 // Get necessary DOM elements
+// Get necessary DOM elements
 const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
 const qrCodeContainer = document.getElementById('qr-code-container');
 const totalBillElement = document.getElementById('total-bill');
