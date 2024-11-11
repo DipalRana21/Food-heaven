@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('input[name="items"]:checked').forEach(itemCheckbox => {
             const itemName = itemCheckbox.value;
             const itemPrice = parseFloat(itemCheckbox.getAttribute('data-price'));
-            const itemQuantity = parseInt(document.querySelector(input[name="${itemName.replace(' ', '_')}_quantity"]).value);
+            const itemQuantity = parseInt(document.querySelector(`input[name="${itemName.replace(' ', '_')}_quantity"]`).value);
             items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
             totalBill += itemPrice * itemQuantity;
         });
@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
             orderSummary.classList.remove('hidden');
             document.getElementById('menu').classList.add('hidden');
     
-            orderDetails.innerHTML = items.map(item => <p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>).join('');
+            orderDetails.innerHTML = items.map(item =>` <p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
 
             totalBillElement.textContent = totalBill.toFixed(2);
            
@@ -116,7 +116,7 @@ document.getElementById('login-form').addEventListener('submit', async (e) => {
 
             orderSummary.classList.remove('hidden');
             orderDetails.innerHTML = data.orders.map(order =>
-                order.items.map(item => <p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>).join('')
+                order.items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('')
             ).join('<br/>');
             totalBillElement.textContent = data.orders.reduce((acc, order) => acc + order.totalAmount, 0).toFixed(2);
            
