@@ -300,7 +300,7 @@ function loadAndUpdateTotalBill() {
   // Set baseBillAmount from saved order history or to 0 if no previous orders
   baseBillAmount = savedBaseAmount;
 
-  // Calculate the current total based on checkbox selection
+  // Calculate the current total based on checkbox selection and past order existence
   let currentTotal = baseBillAmount;
   if (advanceOrderCheckbox.checked) {
     currentTotal += extraCharge;
@@ -315,7 +315,7 @@ function loadAndUpdateTotalBill() {
 
 // Event listener for the advance order checkbox
 advanceOrderCheckbox.addEventListener('change', () => {
-  // Update the total bill based on checkbox selection
+  // Update the total bill based on checkbox selection and past order existence
   let finalAmount = baseBillAmount;
   if (advanceOrderCheckbox.checked) {
     finalAmount += extraCharge;
