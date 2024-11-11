@@ -292,24 +292,20 @@ const totalBillElement = document.getElementById('total-bill');
 const placeOrderBtn = document.getElementById('place-order');
 let extraCharge = 50; // Fixed ₹50 extra charge for advance order
 
-// Function to load and update total bill
 function loadAndUpdateTotalBill() {
-  // Retrieve the saved base amount from localStorage (previous order amount)
   const savedBaseAmount = parseFloat(localStorage.getItem('finalBillAmount')) || 0;
+  console.log("Saved Base Amount:", savedBaseAmount);
 
-  // Set baseBillAmount from saved order history or to 0 if no previous orders
   baseBillAmount = savedBaseAmount;
 
-  // Calculate the current total based on checkbox selection and past order existence
   let currentTotal = baseBillAmount;
   if (advanceOrderCheckbox.checked) {
     currentTotal += extraCharge;
-    qrCodeContainer.classList.remove('hidden');
-  } else {
-    qrCodeContainer.classList.add('hidden');
+    console.log("Adding extra charge:", extraCharge);
   }
 
-  // Display the current total
+  console.log("Calculated Total:", currentTotal);
+
   totalBillElement.textContent = currentTotal.toFixed(2);
 }
 
