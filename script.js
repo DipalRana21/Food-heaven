@@ -391,14 +391,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Update total bill and order status
             totalBill.textContent = `₹${lastOrder.total}`;
-            orderStatus.textContent = lastOrder.status || "Pending";
+            // orderStatus.textContent = lastOrder.status || "Pending";
 
             // Show or hide "Mark as Delivered" button based on order status
-            if (lastOrder.status === "Pending") {
-                updateStatusButton.classList.remove("hidden");
-            } else {
-                updateStatusButton.classList.add("hidden");
-            }
+            // if (lastOrder.status === "Pending") {
+            //     updateStatusButton.classList.remove("hidden");
+            // } else {
+            //     updateStatusButton.classList.add("hidden");
+            // }
         } else {
             orderSummarySection.classList.add("hidden");
         }
@@ -407,24 +407,24 @@ document.addEventListener('DOMContentLoaded', () => {
   
 
 //   Event listener for "Mark as Delivered" button
-updateStatusButton?.addEventListener("click", () => {
-    const pastOrders = JSON.parse(localStorage.getItem("pastOrders")) || [];
-    if (pastOrders.length > 0) {
-        const lastOrder = pastOrders[pastOrders.length - 1];
+// updateStatusButton?.addEventListener("click", () => {
+//     const pastOrders = JSON.parse(localStorage.getItem("pastOrders")) || [];
+//     if (pastOrders.length > 0) {
+//         const lastOrder = pastOrders[pastOrders.length - 1];
         
-        // Only update if the status is currently 'Pending'
-        if (lastOrder.status === "Pending") {
-            lastOrder.status = "Delivered";
-            localStorage.setItem("pastOrders", JSON.stringify(pastOrders));
+//         // Only update if the status is currently 'Pending'
+//         if (lastOrder.status === "Pending") {
+//             lastOrder.status = "Delivered";
+//             localStorage.setItem("pastOrders", JSON.stringify(pastOrders));
 
-            // Reload orders to reflect the new status
-            loadPastOrders();
-            alert("Order status updated to Delivered!");
-        } else {
-            alert("Order is already marked as Delivered!");
-        }
-    }
-});
+//             // Reload orders to reflect the new status
+//             loadPastOrders();
+//             alert("Order status updated to Delivered!");
+//         } else {
+//             alert("Order is already marked as Delivered!");
+//         }
+//     }
+// });
   // Load past orders on page load
   document.addEventListener("DOMContentLoaded", loadPastOrders);
 
