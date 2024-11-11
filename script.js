@@ -284,6 +284,8 @@ document.getElementById('signup-form').addEventListener('submit', async (e) => {
 //     updateTotalBill();
 // });
 
+// Initialize variables
+// Set baseBillAmount to the previous total bill if it exists, otherwise set it to 0
 let baseBillAmount = parseFloat(localStorage.getItem('finalBillAmount')) || 0;
 
 const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
@@ -291,38 +293,49 @@ const qrCodeContainer = document.getElementById('qr-code-container');
 const totalBillElement = document.getElementById('total-bill');
 const placeOrderBtn = document.getElementById('place-order');
 let extraCharge = 50; // Fixed ₹50 extra charge for advance order
+let isAdvanceOrder = localStorage.getItem('isAdvanceOrder') === 'true';
 
+// Function to load and update total bill
 function loadAndUpdateTotalBill() {
-  const savedBaseAmount = parseFloat(localStorage.getItem('finalBillAmount')) || 0;
-  console.log("Saved Base Amount:", savedBaseAmount);
+    // Retrieve the saved base amount and isAdvanceOrder status from localStorage
+    const savedBaseAmount = parseFloat(localStorage.getItem('finalBillAmount')) || 0;
+    const savedIsAdvanceOrder = localStorage.getItem('isAdvanceOrder') === 'true';
 
-  baseBillAmount = savedBaseAmount;
+    // Set baseBillAmount from saved order history or to 0 if no previous orders
+    baseBillAmount = savedBaseAmount;
+    let currentTotal = baseBillAmount;
 
-  let currentTotal = baseBillAmount;
-  if (advanceOrderCheckbox.checked) {
-    currentTotal += extraCharge;
-    console.log("Adding extra charge:", extraCharge);
-  }
+    // If advance order was selected previously, add ₹50 to the total
+    if (savedIsAdvanceOrder) {
+        currentTotal += extraCharge;
+        advanceOrderCheckbox.checked = true;
+        qrCodeContainer.classList.remove('hidden');
+    } else {
+        advanceOrderCheckbox.checked = false;
+        qrCodeContainer.classList.add('hidden');
+    }
 
-  console.log("Calculated Total:", currentTotal);
-
-  totalBillElement.textContent = currentTotal.toFixed(2);
+    // Display the current total
+    totalBillElement.textContent = currentTotal.toFixed(2);
 }
 
 // Event listener for the advance order checkbox
 advanceOrderCheckbox.addEventListener('change', () => {
-  // Update the total bill based on checkbox selection and past order existence
-  let finalAmount = baseBillAmount;
-  if (advanceOrderCheckbox.checked) {
-    finalAmount += extraCharge;
-    qrCodeContainer.classList.remove('hidden');
-  } else {
-    qrCodeContainer.classList.add('hidden');
-  }
+    isAdvanceOrder = advanceOrderCheckbox.checked;
+    localStorage.setItem('isAdvanceOrder', isAdvanceOrder);
 
-  totalBillElement.textContent = finalAmount.toFixed(2);
+    // Calculate the new total
+    let finalAmount = baseBillAmount;
+    if (isAdvanceOrder) {
+        finalAmount += extraCharge;
+        qrCodeContainer.classList.remove('hidden');
+    } else {
+        qrCodeContainer.classList.add('hidden');
+    }
+
+    // Update the total bill display
+    totalBillElement.textContent = finalAmount.toFixed(2);
 });
-
 
 // Place Order button click event
 placeOrderBtn.addEventListener('click', () => {
@@ -343,9 +356,6 @@ placeOrderBtn.addEventListener('click', () => {
 
 // Load previous state on page refresh
 window.addEventListener('DOMContentLoaded', loadAndUpdateTotalBill);
-
-
-
 
 
 
