@@ -358,4 +358,31 @@ updateStatusButton?.addEventListener("click", () => {
 });
 
 
+document.addEventListener('DOMContentLoaded', function () {
+    const menuQrCode = document.getElementById('menuQrCode');
+
+    // Direct access to the menu when the QR image is clicked
+    if (menuQrCode) {
+        menuQrCode.addEventListener('click', function () {
+            // Bypass login and directly navigate to the menu
+            window.location.href = 'https://dipalrana21.github.io/Food-heaven/#menu';
+        });
+    }
+
+    // Existing login check
+    const token = localStorage.getItem('token');
+    if (!token) {
+        // If token not found, show login section unless redirected via QR
+        const currentUrl = window.location.href;
+        if (!currentUrl.includes('#menu')) {
+            document.getElementById('login').classList.remove('hidden');
+        } else {
+            // If redirected to #menu, show the menu without login
+            showSections();
+        }
+    } else {
+        // User is already logged in
+        showSections();
+    }
+});
 
