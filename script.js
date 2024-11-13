@@ -359,30 +359,24 @@ updateStatusButton?.addEventListener("click", () => {
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    const menuQrCode = document.getElementById('menuQrCode');
+   
 
-    // Direct access to the menu when the QR image is clicked
-    if (menuQrCode) {
-        menuQrCode.addEventListener('click', function () {
-            // Bypass login and directly navigate to the menu
-            window.location.href = 'https://dipalrana21.github.io/Food-heaven/#menu';
-        });
+    const currentUrl = window.location.href;
+    const loginSection = document.getElementById('login');
+
+    // Check if the user is coming via the QR code scan (directly to menu section URL)
+    if (currentUrl.includes('#menu') && document.getElementById('menuQrCode')) {
+        // Directly show the menu without requiring login
+        document.getElementById('main-header').classList.remove('hidden');
+        document.getElementById('menu').classList.remove('hidden');
+        document.querySelector('footer').classList.remove('hidden');
+        loginSection.classList.add('hidden');
+        return; // Exit here, skip login process
     }
 
-    // Existing login check
-    const token = localStorage.getItem('token');
-    if (!token) {
-        // If token not found, show login section unless redirected via QR
-        const currentUrl = window.location.href;
-        if (!currentUrl.includes('#menu')) {
-            document.getElementById('login').classList.remove('hidden');
-        } else {
-            // If redirected to #menu, show the menu without login
-            showSections();
-        }
-    } else {
-        // User is already logged in
-        showSections();
-    }
+    // Existing login process here
+    loginSection.style.display = 'block';
+
+ 
 });
 
