@@ -358,20 +358,4 @@ updateStatusButton?.addEventListener("click", () => {
 });
 
 
-document.addEventListener('DOMContentLoaded', function() {
-    const loginSection = document.getElementById('login');
-    const mainContent = document.getElementById('main-content');
-    
-    // Check if user accessed via QR code
-    const urlParams = new URLSearchParams(window.location.search);
-    const isScanned = urlParams.has('scanned'); // Example: ?scanned=true
-    
-    if (isScanned) {
-        // Directly show the menu without login if accessed via QR scan
-        loginSection.style.display = 'none';
-        mainContent.classList.remove('hidden');
-        showSections();
-        return; // Skip login process
-    }
-    
-    // Existing logic below...
+
