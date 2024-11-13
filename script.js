@@ -11,6 +11,30 @@ document.addEventListener('DOMContentLoaded', function() {
     const sections = document.querySelectorAll('section');
     const footer = document.querySelector('footer');
 
+    const loginSection = document.getElementById('login');
+    const header = document.getElementById('main-header');
+    const menuSection = document.getElementById('menu');
+    const footer = document.querySelector('footer');
+
+    // Check if accessed via QR code URL and set session flag
+    if (window.location.href.includes('#menu')) {
+        sessionStorage.setItem('qrAccess', 'true');
+    }
+
+    // Check session flag for QR access
+    const isQrAccess = sessionStorage.getItem('qrAccess') === 'true';
+
+    // If accessed via QR scan, bypass login
+    if (isQrAccess) {
+        header.classList.remove('hidden');
+        menuSection.classList.remove('hidden');
+        footer.classList.remove('hidden');
+        loginSection.classList.add('hidden');
+    } else {
+        // Default login process
+        loginSection.style.display = 'block';
+    }
+
     const placeOrderButton = document.getElementById('place-order');
     const orderSummary = document.getElementById('order-summary');
     const orderDetails = document.getElementById('order-details');
@@ -357,26 +381,4 @@ updateStatusButton?.addEventListener("click", () => {
     loadPastOrders();
 });
 
-
-document.addEventListener('DOMContentLoaded', function () {
-   
-
-    const currentUrl = window.location.href;
-    const loginSection = document.getElementById('login');
-
-    // Check if the user is coming via the QR code scan (directly to menu section URL)
-    if (currentUrl.includes('#menu') && document.getElementById('menuQrCode')) {
-        // Directly show the menu without requiring login
-        document.getElementById('main-header').classList.remove('hidden');
-        document.getElementById('menu').classList.remove('hidden');
-        document.querySelector('footer').classList.remove('hidden');
-        loginSection.classList.add('hidden');
-        return; // Exit here, skip login process
-    }
-
-    // Existing login process here
-    loginSection.style.display = 'block';
-
- 
-});
 
