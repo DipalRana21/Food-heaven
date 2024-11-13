@@ -290,13 +290,13 @@ placeOrderBtn.addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', () => {
     const orderDetails = document.getElementById("order-details");
     const totalBill = document.getElementById("total-bill");
-    const orderStatus = document.getElementById("order-status");
+    // const orderStatus = document.getElementById("order-status");
     const orderSummarySection = document.getElementById("order-summary");
     // const updateStatusButton = document.getElementById("markDelivered");
     const placeOrderButton = document.getElementById("place-order");
 
     // Verify elements exist before proceeding
-    if (!orderDetails || !totalBill || !orderStatus || !orderSummarySection  || !placeOrderButton) {
+    if (!orderDetails || !totalBill || !orderSummarySection  || !placeOrderButton) {
         console.error("One or more required elements are missing in the HTML.");
         return;
     }
