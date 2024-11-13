@@ -292,11 +292,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const totalBill = document.getElementById("total-bill");
     const orderStatus = document.getElementById("order-status");
     const orderSummarySection = document.getElementById("order-summary");
-    const updateStatusButton = document.getElementById("markDelivered");
+    // const updateStatusButton = document.getElementById("markDelivered");
     const placeOrderButton = document.getElementById("place-order");
 
     // Verify elements exist before proceeding
-    if (!orderDetails || !totalBill || !orderStatus || !orderSummarySection || !updateStatusButton || !placeOrderButton) {
+    if (!orderDetails || !totalBill || !orderStatus || !orderSummarySection  || !placeOrderButton) {
         console.error("One or more required elements are missing in the HTML.");
         return;
     }
