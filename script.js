@@ -11,11 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sections = document.querySelectorAll('section');
     const footer = document.querySelector('footer');
 
-    const loginSection = document.getElementById('login');
-    const header = document.getElementById('main-header');
-    const menuSection = document.getElementById('menu');
-    const footer = document.querySelector('footer');
-
+  
  
 
     const placeOrderButton = document.getElementById('place-order');
