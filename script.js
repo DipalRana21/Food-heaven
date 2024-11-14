@@ -85,18 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
 // });
 
 
-    function updateTotalBill() {
-    // Calculate the current total bill
-    let currentBill = baseBillAmount;
-
-    // Add extra charge if advance order is selected
-    if (isAdvanceOrder) {
-        currentBill += extraCharge;
-    }
-
-    // Display the updated total bill
-    totalBillElement.textContent = currentBill.toFixed(2);
-}
+   
 
 placeOrderBtn.addEventListener('click', async () => {
     try {
@@ -291,13 +280,13 @@ let extraCharge = 50; // Fixed ₹50 extra charge
 let isAdvanceOrder = false; // Track the state of advance order
 
 // Function to update total bill on the screen
-// function updateTotalBill() {
-//     let currentBill = baseBillAmount;
-//     if (isAdvanceOrder) {
-//         currentBill += extraCharge;
-//     }
-//     totalBillElement.textContent = currentBill.toFixed(2);
-// }
+function updateTotalBill() {
+    let currentBill = baseBillAmount;
+    if (isAdvanceOrder) {
+        currentBill += extraCharge;
+    }
+    totalBillElement.textContent = currentBill.toFixed(2);
+}
 
 
 // Load state from session on page load
