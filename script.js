@@ -46,19 +46,91 @@ document.addEventListener('DOMContentLoaded', function() {
         footer.classList.remove('hidden');
     }
 
+// Place Order Button Click Event imp
+//     placeOrderButton.addEventListener('click', async function() {
+//         const items = [];
+//         let totalBill = 0;
+    
+//         document.querySelectorAll('input[name="items"]:checked').forEach(itemCheckbox => {
+//             const itemName = itemCheckbox.value;
+//             const itemPrice = parseFloat(itemCheckbox.getAttribute('data-price'));
+//             const itemQuantity = parseInt(document.querySelector(`input[name="${itemName.replace(' ', '_')}_quantity"]`).value);
+//             items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
+//             totalBill += itemPrice * itemQuantity;
+//         });
+    
+//         const response = await fetch(`${backendUrl}/place-order`, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
+//             },
+//             body: JSON.stringify({ items, totalAmount: totalBill }),
+//         });
+    
+//         const data = await response.json();
+    
+//         if (response.ok) {
+//             orderSummary.classList.remove('hidden');
+//             document.getElementById('menu').classList.add('hidden');
+    
+//             orderDetails.innerHTML = items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
+
+//             totalBillElement.textContent = totalBill.toFixed(2);
+           
+//         } else {
+//             alert('Error placing order: ' + data.message);
+//         }
+//     });
+// });
+
+// Get the checkbox and QR code container elements
+const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
+const qrCodeContainer = document.getElementById('qr-code-container');
+
+// Event Listener for Advance Order Checkbox
+advanceOrderCheckbox.addEventListener('change', function () {
+    // Toggle visibility of QR code based on checkbox state
+    if (advanceOrderCheckbox.checked) {
+        qrCodeContainer.classList.remove('hidden'); // Show QR code
+    } else {
+        qrCodeContainer.classList.add('hidden'); // Hide QR code
+    }
+});
+
 // Place Order Button Click Event
-    placeOrderButton.addEventListener('click', async function() {
-        const items = [];
-        let totalBill = 0;
-    
-        document.querySelectorAll('input[name="items"]:checked').forEach(itemCheckbox => {
-            const itemName = itemCheckbox.value;
-            const itemPrice = parseFloat(itemCheckbox.getAttribute('data-price'));
-            const itemQuantity = parseInt(document.querySelector(`input[name="${itemName.replace(' ', '_')}_quantity"]`).value);
-            items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
-            totalBill += itemPrice * itemQuantity;
-        });
-    
+placeOrderButton.addEventListener('click', async function() {
+    const items = [];
+    let totalBill = 0;
+    let extraCharge = 0;
+
+    // Check if the advance order feature is selected
+    if (advanceOrderCheckbox && advanceOrderCheckbox.checked) {
+        extraCharge = 50; // Add ₹50 extra charge
+    }
+
+    // Collect selected items
+    document.querySelectorAll('input[name="items"]:checked').forEach(itemCheckbox => {
+        const itemName = itemCheckbox.value;
+        const itemPrice = parseFloat(itemCheckbox.getAttribute('data-price'));
+
+        // Check if the quantity input field exists
+        const quantityInput = document.querySelector(`input[name="${itemName.replace(' ', '_')}_quantity"]`);
+        let itemQuantity = 1; // Default to 1 if no quantity input is found
+
+        if (quantityInput) {
+            itemQuantity = parseInt(quantityInput.value) || 1; // Set to 1 if input is invalid
+        }
+
+        // Add item to the list
+        items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
+        totalBill += itemPrice * itemQuantity;
+    });
+
+    // Add extra charge to the total bill
+    totalBill += extraCharge;
+
+    try {
         const response = await fetch(`${backendUrl}/place-order`, {
             method: 'POST',
             headers: {
@@ -67,23 +139,33 @@ document.addEventListener('DOMContentLoaded', function() {
             },
             body: JSON.stringify({ items, totalAmount: totalBill }),
         });
-    
+
         const data = await response.json();
-    
+
         if (response.ok) {
             orderSummary.classList.remove('hidden');
             document.getElementById('menu').classList.add('hidden');
-    
-            orderDetails.innerHTML = items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
 
-            totalBillElement.textContent = totalBill.toFixed(2);
-           
+            // Display order details
+            orderDetails.innerHTML = items.map(item => 
+                `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`
+            ).join('');
+
+            // Add extra charge info if applied
+            if (extraCharge > 0) {
+                orderDetails.innerHTML += `<p>Advance Order Charge: ₹${extraCharge.toFixed(2)}</p>`;
+            }
+
+            // Display total amount
+            totalBillElement.textContent = `Total Bill: ₹${totalBill.toFixed(2)}`;
         } else {
             alert('Error placing order: ' + data.message);
         }
-    });
+    } catch (error) {
+        console.error('Order placement error:', error);
+        alert('Failed to place order. Please try again later.');
+    }
 });
-
 
 
 
@@ -363,56 +445,56 @@ updateStatusButton?.addEventListener("click", () => {
 
 
 // Define variables for checkbox and place order button
-const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
-const placeOrderButton = document.getElementById('place-order');
+// const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
+// const placeOrderButton = document.getElementById('place-order');
 
-// Function to get the current total bill amount
-function getCurrentTotalBill() {
-    const totalBillElement = document.getElementById('total-bill');
-    return parseFloat(totalBillElement.textContent.replace('₹', '')) || 0;
-}
+// // Function to get the current total bill amount
+// function getCurrentTotalBill() {
+//     const totalBillElement = document.getElementById('total-bill');
+//     return parseFloat(totalBillElement.textContent.replace('₹', '')) || 0;
+// }
 
-// Function to update the total bill with extra charge if advance feature is used
-function updateTotalBillWithExtraCharge() {
-    let totalBill = getCurrentTotalBill();
+// // Function to update the total bill with extra charge if advance feature is used
+// function updateTotalBillWithExtraCharge() {
+//     let totalBill = getCurrentTotalBill();
     
-    // Check if the advance order feature is selected
-    if (advanceOrderCheckbox.checked) {
-        totalBill += 50; // Add extra ₹50 charge
-    }
+//     // Check if the advance order feature is selected
+//     if (advanceOrderCheckbox.checked) {
+//         totalBill += 50; // Add extra ₹50 charge
+//     }
 
-    // Update the total bill in the HTML
-    const totalBillElement = document.getElementById('total-bill');
-    totalBillElement.textContent = `₹${totalBill.toFixed(2)}`;
-}
+//     // Update the total bill in the HTML
+//     const totalBillElement = document.getElementById('total-bill');
+//     totalBillElement.textContent = `₹${totalBill.toFixed(2)}`;
+// }
 
-// Event listener for the checkbox change
-advanceOrderCheckbox.addEventListener('change', updateTotalBillWithExtraCharge);
+// // Event listener for the checkbox change
+// advanceOrderCheckbox.addEventListener('change', updateTotalBillWithExtraCharge);
 
-// Place Order Button Event Listener
-placeOrderButton.addEventListener('click', function() {
-    const isAdvanceOrder = advanceOrderCheckbox.checked;
-    const extraCharge = isAdvanceOrder ? 50 : 0; // ₹50 if the advance order is selected
+// // Place Order Button Event Listener
+// placeOrderButton.addEventListener('click', function() {
+//     const isAdvanceOrder = advanceOrderCheckbox.checked;
+//     const extraCharge = isAdvanceOrder ? 50 : 0; // ₹50 if the advance order is selected
 
-    // Get the current total bill amount and add extra charge if applicable
-    let totalBill = getCurrentTotalBill();
-    if (isAdvanceOrder) {
-        totalBill += 50;
-    }
+//     // Get the current total bill amount and add extra charge if applicable
+//     let totalBill = getCurrentTotalBill();
+//     if (isAdvanceOrder) {
+//         totalBill += 50;
+//     }
 
-    // Prepare order data to save
-    const orderData = {
-        items: items, // Assuming you already have selectedItems in your existing JS
-        totalBill: totalBill,
-        extraCharge: extraCharge,
-        advanceOrder: isAdvanceOrder
-    };
+//     // Prepare order data to save
+//     const orderData = {
+//         items: items, // Assuming you already have selectedItems in your existing JS
+//         totalBill: totalBill,
+//         extraCharge: extraCharge,
+//         advanceOrder: isAdvanceOrder
+//     };
 
-    // Call your existing function to store order data in the database
-    saveOrderToDatabase(orderData);
+//     // Call your existing function to store order data in the database
+//     saveOrderToDatabase(orderData);
     
-    // Reset the checkbox after placing the order
-    advanceOrderCheckbox.checked = false;
-    updateTotalBillWithExtraCharge(); // Reset the total bill without the extra charge
-});
+//     // Reset the checkbox after placing the order
+//     advanceOrderCheckbox.checked = false;
+//     updateTotalBillWithExtraCharge(); // Reset the total bill without the extra charge
+// });
 
