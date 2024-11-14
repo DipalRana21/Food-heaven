@@ -47,43 +47,92 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 // Place Order Button Click Event imp
-    placeOrderButton.addEventListener('click', async function() {
-        const items = [];
-        let totalBill = 0;
+//     placeOrderButton.addEventListener('click', async function() {
+//         const items = [];
+//         let totalBill = 0;
     
-        document.querySelectorAll('input[name="items"]:checked').forEach(itemCheckbox => {
-            const itemName = itemCheckbox.value;
-            const itemPrice = parseFloat(itemCheckbox.getAttribute('data-price'));
-            const itemQuantity = parseInt(document.querySelector(`input[name="${itemName.replace(' ', '_')}_quantity"]`).value);
-            items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
-            totalBill += itemPrice * itemQuantity;
-        });
+//         document.querySelectorAll('input[name="items"]:checked').forEach(itemCheckbox => {
+//             const itemName = itemCheckbox.value;
+//             const itemPrice = parseFloat(itemCheckbox.getAttribute('data-price'));
+//             const itemQuantity = parseInt(document.querySelector(`input[name="${itemName.replace(' ', '_')}_quantity"]`).value);
+//             items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
+//             totalBill += itemPrice * itemQuantity;
+//         });
     
-        const response = await fetch(`${backendUrl}/place-order`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            },
-            body: JSON.stringify({ items, totalAmount: totalBill }),
-        });
+//         const response = await fetch(`${backendUrl}/place-order`, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
+//             },
+//             body: JSON.stringify({ items, totalAmount: totalBill }),
+//         });
     
-        const data = await response.json();
+//         const data = await response.json();
     
-        if (response.ok) {
-            orderSummary.classList.remove('hidden');
-            document.getElementById('menu').classList.add('hidden');
+//         if (response.ok) {
+//             orderSummary.classList.remove('hidden');
+//             document.getElementById('menu').classList.add('hidden');
     
-            orderDetails.innerHTML = items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
+//             orderDetails.innerHTML = items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
 
-            totalBillElement.textContent = totalBill.toFixed(2);
+//             totalBillElement.textContent = totalBill.toFixed(2);
            
-        } else {
-            alert('Error placing order: ' + data.message);
-        }
-    });
-});
+//         } else {
+//             alert('Error placing order: ' + data.message);
+//         }
+//     });
+// });
 
+// Place Order Button Click Event
+placeOrderButton.addEventListener('click', async function() {
+    const items = [];
+    let totalBill = 0;
+    const extraCharge = 50; // Fixed ₹50 extra charge for advance orders
+
+    document.querySelectorAll('input[name="items"]:checked').forEach(itemCheckbox => {
+        const itemName = itemCheckbox.value;
+        const itemPrice = parseFloat(itemCheckbox.getAttribute('data-price'));
+        const itemQuantity = parseInt(document.querySelector(`input[name="${itemName.replace(' ', '_')}_quantity"]`).value);
+        items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
+        totalBill += itemPrice * itemQuantity;
+    });
+
+    // Check if advance order is selected and add ₹50 extra charge
+    const isAdvanceOrder = sessionStorage.getItem('isAdvanceOrder') === 'true';
+    if (isAdvanceOrder) {
+        totalBill += extraCharge;
+        alert("A ₹50 extra charge has been applied for advance ordering.");
+    }
+
+    // Make API request to place the order
+    const response = await fetch(`${backendUrl}/place-order`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify({ items, totalAmount: totalBill }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+        orderSummary.classList.remove('hidden');
+        document.getElementById('menu').classList.add('hidden');
+
+        // Display order details with ₹ sign
+        orderDetails.innerHTML = items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
+        totalBillElement.textContent = totalBill.toFixed(2);
+    } else {
+        alert('Error placing order: ' + data.message);
+    }
+
+    // Reset advance order state
+    sessionStorage.setItem('isAdvanceOrder', 'false');
+    advanceOrderCheckbox.checked = false;
+    qrCodeContainer.classList.add('hidden');
+});
 
 
 
