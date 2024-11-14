@@ -277,18 +277,18 @@ const totalBillElement = document.getElementById('total-bill');
 const placeOrderBtn = document.getElementById('place-order');
 
 // Initialize variables
-let baseBillAmount = parseFloat(totalBillElement.textContent) || 0;
-let extraCharge = 50; // Fixed ₹50 extra charge
-let isAdvanceOrder = false; // Track the state of advance order
+// let baseBillAmount = parseFloat(totalBillElement.textContent) || 0;
+// let extraCharge = 50; // Fixed ₹50 extra charge
+// let isAdvanceOrder = false; // Track the state of advance order
 
-// Function to update total bill on the screen
-function updateTotalBill() {
-    let currentBill = baseBillAmount;
-    if (isAdvanceOrder) {
-        currentBill += extraCharge;
-    }
-    totalBillElement.textContent = currentBill.toFixed(2);
-}
+// // Function to update total bill on the screen
+// function updateTotalBill() {
+//     let currentBill = baseBillAmount;
+//     if (isAdvanceOrder) {
+//         currentBill += extraCharge;
+//     }
+//     totalBillElement.textContent = currentBill.toFixed(2);
+// }
 
 // Load state from session on page load
 window.addEventListener('DOMContentLoaded', () => {
