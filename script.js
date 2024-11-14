@@ -16,24 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const menuSection = document.getElementById('menu');
     const footer = document.querySelector('footer');
 
-    // Check if accessed via QR code URL and set session flag
-    if (window.location.href.includes('#menu')) {
-        sessionStorage.setItem('qrAccess', 'true');
-    }
-
-    // Check session flag for QR access
-    const isQrAccess = sessionStorage.getItem('qrAccess') === 'true';
-
-    // If accessed via QR scan, bypass login
-    if (isQrAccess) {
-        header.classList.remove('hidden');
-        menuSection.classList.remove('hidden');
-        footer.classList.remove('hidden');
-        loginSection.classList.add('hidden');
-    } else {
-        // Default login process
-        loginSection.style.display = 'block';
-    }
+ 
 
     const placeOrderButton = document.getElementById('place-order');
     const orderSummary = document.getElementById('order-summary');
