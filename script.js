@@ -228,18 +228,18 @@ const totalBillElement = document.getElementById('total-bill');
 const placeOrderBtn = document.getElementById('place-order');
 
 // Initialize variables
-// let baseBillAmount = parseFloat(totalBillElement.textContent) || 0;
-// let extraCharge = 50; // Fixed ₹50 extra charge
-// let isAdvanceOrder = false; // Track the state of advance order
+let baseBillAmount = parseFloat(totalBillElement.textContent) || 0;
+let extraCharge = 50; // Fixed ₹50 extra charge
+let isAdvanceOrder = false; // Track the state of advance order
 
-// // Function to update total bill on the screen
-// function updateTotalBill() {
-//     let currentBill = baseBillAmount;
-//     if (isAdvanceOrder) {
-//         currentBill += extraCharge;
-//     }
-//     totalBillElement.textContent = currentBill.toFixed(2);
-// }
+// Function to update total bill on the screen
+function updateTotalBill() {
+    let currentBill = baseBillAmount;
+    if (isAdvanceOrder) {
+        currentBill += extraCharge;
+    }
+    totalBillElement.textContent = currentBill.toFixed(2);
+}
 
 // Load state from session on page load
 window.addEventListener('DOMContentLoaded', () => {
@@ -271,21 +271,21 @@ advanceOrderCheckbox.addEventListener('change', () => {
 });
 
 // Place Order button logic
-// placeOrderBtn.addEventListener('click', () => {
-//     const finalBillAmount = parseFloat(totalBillElement.textContent);
+placeOrderBtn.addEventListener('click', () => {
+    const finalBillAmount = parseFloat(totalBillElement.textContent);
 
-//     // Alert with the total bill amount
-//     alert(`Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)}`);
+    // Alert with the total bill amount
+    alert(`Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)}`);
 
-//     // Reset UI and state after placing the order
-//     advanceOrderCheckbox.checked = false;
-//     qrCodeContainer.classList.add('hidden');
-//     sessionStorage.setItem('isAdvanceOrder', 'false');
-//     isAdvanceOrder = false;
+    // Reset UI and state after placing the order
+    advanceOrderCheckbox.checked = false;
+    qrCodeContainer.classList.add('hidden');
+    sessionStorage.setItem('isAdvanceOrder', 'false');
+    isAdvanceOrder = false;
 
-//     // Update total bill back to base
-//     updateTotalBill();
-// });
+    // Update total bill back to base
+    updateTotalBill();
+});
 
 
 
