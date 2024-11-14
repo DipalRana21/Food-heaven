@@ -47,43 +47,87 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 // Place Order Button Click Event imp
-    placeOrderButton.addEventListener('click', async function() {
-        const items = [];
-        let totalBill = 0;
+//     placeOrderButton.addEventListener('click', async function() {
+//         const items = [];
+//         let totalBill = 0;
     
-        document.querySelectorAll('input[name="items"]:checked').forEach(itemCheckbox => {
-            const itemName = itemCheckbox.value;
-            const itemPrice = parseFloat(itemCheckbox.getAttribute('data-price'));
-            const itemQuantity = parseInt(document.querySelector(`input[name="${itemName.replace(' ', '_')}_quantity"]`).value);
-            items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
-            totalBill += itemPrice * itemQuantity;
-        });
+//         document.querySelectorAll('input[name="items"]:checked').forEach(itemCheckbox => {
+//             const itemName = itemCheckbox.value;
+//             const itemPrice = parseFloat(itemCheckbox.getAttribute('data-price'));
+//             const itemQuantity = parseInt(document.querySelector(`input[name="${itemName.replace(' ', '_')}_quantity"]`).value);
+//             items.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
+//             totalBill += itemPrice * itemQuantity;
+//         });
     
+//         const response = await fetch(`${backendUrl}/place-order`, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//                 'Authorization': `Bearer ${localStorage.getItem('token')}`,
+//             },
+//             body: JSON.stringify({ items, totalAmount: totalBill }),
+//         });
+    
+//         const data = await response.json();
+    
+//         if (response.ok) {
+//             orderSummary.classList.remove('hidden');
+//             document.getElementById('menu').classList.add('hidden');
+    
+//             orderDetails.innerHTML = items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
+
+//             totalBillElement.textContent = totalBill.toFixed(2);
+           
+//         } else {
+//             alert('Error placing order: ' + data.message);
+//         }
+//     });
+// });
+
+placeOrderBtn.addEventListener('click', async () => {
+    try {
+        // Final bill calculation with advance order charge if applicable
+        const finalBillAmount = parseFloat(totalBillElement.textContent);
+
+        // Order details to be sent to the backend
+        const orderDetails = {
+            totalBill: finalBillAmount,
+            isAdvanceOrder: isAdvanceOrder,
+            orderStatus: 'Pending'
+        };
+
+        // Send order details to the backend (update your backend URL here)
         const response = await fetch(`${backendUrl}/place-order`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${localStorage.getItem('token')}`,
             },
-            body: JSON.stringify({ items, totalAmount: totalBill }),
+            body: JSON.stringify(orderDetails)
         });
-    
-        const data = await response.json();
-    
+
+        // Handle backend response
         if (response.ok) {
-            orderSummary.classList.remove('hidden');
-            document.getElementById('menu').classList.add('hidden');
-    
-            orderDetails.innerHTML = items.map(item => `<p>${item.name} x ${item.quantity} = ₹${(item.price * item.quantity).toFixed(2)}</p>`).join('');
+            // On success, reset the state and show an alert
+            alert(`Order placed successfully! Total Bill: ₹${finalBillAmount.toFixed(2)}`);
 
-            totalBillElement.textContent = totalBill.toFixed(2);
-           
+            // Reset advance order selection and UI state
+            advanceOrderCheckbox.checked = false;
+            qrCodeContainer.classList.add('hidden');
+            sessionStorage.setItem('isAdvanceOrder', 'false');
+            isAdvanceOrder = false;
+
+            // Reset total bill display to the base bill amount
+            updateTotalBill();
+
         } else {
-            alert('Error placing order: ' + data.message);
+            // Error handling if order placement fails
+            alert('Failed to place order. Please try again later.');
         }
-    });
+    } catch (error) {
+        console.error('Error:', error);
+        alert('An error occurred while placing your order. Please try again later.');
+    }
 });
-
 
 
 
@@ -233,11 +277,24 @@ let extraCharge = 50; // Fixed ₹50 extra charge
 let isAdvanceOrder = false; // Track the state of advance order
 
 // Function to update total bill on the screen
+// function updateTotalBill() {
+//     let currentBill = baseBillAmount;
+//     if (isAdvanceOrder) {
+//         currentBill += extraCharge;
+//     }
+//     totalBillElement.textContent = currentBill.toFixed(2);
+// }
+
 function updateTotalBill() {
+    // Calculate the current total bill
     let currentBill = baseBillAmount;
+
+    // Add extra charge if advance order is selected
     if (isAdvanceOrder) {
         currentBill += extraCharge;
     }
+
+    // Display the updated total bill
     totalBillElement.textContent = currentBill.toFixed(2);
 }
 
@@ -271,21 +328,23 @@ advanceOrderCheckbox.addEventListener('change', () => {
 });
 
 // Place Order button logic
-placeOrderBtn.addEventListener('click', () => {
-    const finalBillAmount = parseFloat(totalBillElement.textContent);
+// placeOrderBtn.addEventListener('click', () => {
+//     const finalBillAmount = parseFloat(totalBillElement.textContent);
 
-    // Alert with the total bill amount
-    alert(`Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)}`);
+//     // Alert with the total bill amount
+//     alert(`Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)}`);
 
-    // Reset UI and state after placing the order
-    advanceOrderCheckbox.checked = false;
-    qrCodeContainer.classList.add('hidden');
-    sessionStorage.setItem('isAdvanceOrder', 'false');
-    isAdvanceOrder = false;
+//     // Reset UI and state after placing the order
+//     advanceOrderCheckbox.checked = false;
+//     qrCodeContainer.classList.add('hidden');
+//     sessionStorage.setItem('isAdvanceOrder', 'false');
+//     isAdvanceOrder = false;
 
-    // Update total bill back to base
-    updateTotalBill();
-});
+//     // Update total bill back to base
+//     updateTotalBill();
+// });
+
+
 
 
 
