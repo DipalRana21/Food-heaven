@@ -84,6 +84,20 @@ document.addEventListener('DOMContentLoaded', function() {
 //     });
 // });
 
+
+    function updateTotalBill() {
+    // Calculate the current total bill
+    let currentBill = baseBillAmount;
+
+    // Add extra charge if advance order is selected
+    if (isAdvanceOrder) {
+        currentBill += extraCharge;
+    }
+
+    // Display the updated total bill
+    totalBillElement.textContent = currentBill.toFixed(2);
+}
+
 placeOrderBtn.addEventListener('click', async () => {
     try {
         // Final bill calculation with advance order charge if applicable
@@ -285,18 +299,6 @@ let isAdvanceOrder = false; // Track the state of advance order
 //     totalBillElement.textContent = currentBill.toFixed(2);
 // }
 
-function updateTotalBill() {
-    // Calculate the current total bill
-    let currentBill = baseBillAmount;
-
-    // Add extra charge if advance order is selected
-    if (isAdvanceOrder) {
-        currentBill += extraCharge;
-    }
-
-    // Display the updated total bill
-    totalBillElement.textContent = currentBill.toFixed(2);
-}
 
 // Load state from session on page load
 window.addEventListener('DOMContentLoaded', () => {
