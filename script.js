@@ -320,21 +320,21 @@ advanceOrderCheckbox.addEventListener('change', () => {
 });
 
 // Place Order button logic
-placeOrderBtn.addEventListener('click', () => {
-    const finalBillAmount = parseFloat(totalBillElement.textContent);
+// placeOrderBtn.addEventListener('click', () => {
+//     const finalBillAmount = parseFloat(totalBillElement.textContent);
 
-    // Alert with the total bill amount
-    alert(`Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)}`);
+//     // Alert with the total bill amount
+//     alert(`Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)}`);
 
-    // Reset UI and state after placing the order
-    advanceOrderCheckbox.checked = false;
-    qrCodeContainer.classList.add('hidden');
-    sessionStorage.setItem('isAdvanceOrder', 'false');
-    isAdvanceOrder = false;
+//     // Reset UI and state after placing the order
+//     advanceOrderCheckbox.checked = false;
+//     qrCodeContainer.classList.add('hidden');
+//     sessionStorage.setItem('isAdvanceOrder', 'false');
+//     isAdvanceOrder = false;
 
-    // Update total bill back to base
-    updateTotalBill();
-});
+//     // Update total bill back to base
+//     updateTotalBill();
+// });
 
 
 
