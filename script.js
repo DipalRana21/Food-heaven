@@ -140,7 +140,7 @@ placeOrderBtn.addEventListener('click', () => {
     const finalBillAmount = parseFloat(totalBillElement.textContent);
 
     // Alert with the total bill amount
-    alert(Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)});
+    alert(`Thank you for placing your order! Your total bill is ₹${finalBillAmount.toFixed(2)}`);
 
     // Reset UI and state after placing the order
     advanceOrderCheckbox.checked = false;
