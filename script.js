@@ -405,3 +405,27 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 });
+
+
+// Function to handle direct redirection from QR scan
+function handleQRRedirection() {
+    // Check if the user is accessing the menu directly via QR scan
+    if (window.location.hash === '#menu') {
+        const token = localStorage.getItem('token');
+
+        // If the token exists, the user is already logged in; show the menu
+        if (token) {
+            document.getElementById('main-content').classList.remove('hidden');
+            document.getElementById('login').classList.add('hidden');
+            // Scroll directly to the menu section
+            document.getElementById('menu').scrollIntoView({ behavior: 'smooth' });
+        } else {
+            // If no token found, alert user to login
+            alert('Please log in to access the menu.');
+            document.getElementById('login').classList.remove('hidden');
+        }
+    }
+}
+
+// Call the function to handle QR code redirection logic
+handleQRRedirection();
