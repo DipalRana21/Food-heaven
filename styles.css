@@ -661,3 +661,52 @@ p strong {
     height: 150px;
     margin-top: 5px;
 }
+
+#advance-order-section h2 {
+    color: cyan;
+    width:500px;
+    margin: auto;
+    /* border: 2px solid gray; */
+    /* border-radius: 9px; */
+    background-color: rgba(0, 0, 0, 0);
+}  
+
+
+#advance-order-section{
+    
+     background-color: rgba(187, 223, 106, 0.691);
+}
+
+#advance-order-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 40px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+   
+    color: white /* White text for contrast */
+    /* transition: all 0.3s ease; */
+}
+
+#advance-order-section h2,
+#advance-order-section p,
+#advance-order-section label {
+    margin-bottom: 20px;
+}
+
+#qr-code-container {
+    margin-top: 20px;
+}
+
+#menuQrCode {
+    width: 150px; /* Adjust size of QR code */
+    height: 150px;
+    margin-top: 10px;
+    border-radius: 10px; /* Optional: rounded corners for QR code */
+    border: 3px solid #fff; /* Optional: white border for the QR code */
+}
+
