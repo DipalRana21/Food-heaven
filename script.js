@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
  // Variables
-const placeOrderButton = document.getElementById('placeOrderButton');
+// const placeOrderButton = document.getElementById('placeOrderButton');
 const advanceOrderCheckbox = document.getElementById('advanceOrderCheckbox');
 const qrCodeContainer = document.getElementById('qr-code-container');
 const totalBillElement = document.getElementById('total-bill');
