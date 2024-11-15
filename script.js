@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
  
 
-    const placeOrderButton = document.getElementById('place-order');
+    // const placeOrderButton = document.getElementById('place-order');
     const orderSummary = document.getElementById('order-summary');
     const orderDetails = document.getElementById('order-details');
     const totalBillElement = document.getElementById('total-bill');
@@ -153,7 +153,7 @@ placeOrderBtn.addEventListener('click', () => {
 });
 
 // Main order function
-placeOrderButton.addEventListener('click', async function() {
+placeOrderBtn.addEventListener('click', async function() {
     const items = [];
     let totalBill = 0;
 
